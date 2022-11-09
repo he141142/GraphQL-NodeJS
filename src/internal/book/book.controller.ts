@@ -17,4 +17,9 @@ export class BookController {
     async deleteBook(@Param("id") id) {
         return this.bookService.deleteBook(id);
     }
+
+    @Post("/genres-loader")
+    async loadGenres () {
+        return this.bookService.loadDefaultGenres();
+    }
 }

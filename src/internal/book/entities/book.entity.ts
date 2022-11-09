@@ -2,11 +2,16 @@ import {Column, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn
 import {GenresEntity} from "./genres.entity";
 import {AuthorEntity} from "../../author/entities/author.entity";
 import {CreateBookDTO} from "../dto/book.create.dto";
+import {Field, ObjectType} from "@nestjs/graphql";
 
+@ObjectType({})
 @Entity({ name: 'books' })
 export class BookEntity{
+    @Field()
     @PrimaryGeneratedColumn('uuid')
     id: string;
+
+    @Field({name: "title"})
     @Column({
         name: 'title',
         type: 'varchar',
@@ -15,6 +20,7 @@ export class BookEntity{
     title: string;
 
 
+    @Field({name : "availableQuantity"})
     @Column({
         name: 'available_quantity',
         type: 'integer',
@@ -22,7 +28,7 @@ export class BookEntity{
     })
     availableQuantity: number = 0;
 
-
+    @Field({name : "totalPage"})
     @Column({
         name: 'page_total',
         type: 'integer',
@@ -30,6 +36,7 @@ export class BookEntity{
     })
     totalPage: number = 0;
 
+    @Field({name : "price"})
     @Column({
         name: 'price',
         type: 'double precision',
@@ -37,6 +44,7 @@ export class BookEntity{
     })
     price: number = 0;
 
+    @Field({name : "salePrice"})
     @Column({
         name: 'sale_price',
         type: 'double precision',
@@ -44,10 +52,12 @@ export class BookEntity{
     })
     salePrice: number = null;
 
+    @Field(() => [GenresEntity], { nullable: true })
     @ManyToMany(() => GenresEntity, (genres) => genres.books)
     @JoinTable()
     genres: GenresEntity[];
 
+    @Field(() => AuthorEntity, { nullable: true })
     @ManyToOne(() => AuthorEntity, (author) => author.books)
     author: AuthorEntity;
 

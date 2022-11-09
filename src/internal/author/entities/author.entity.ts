@@ -1,13 +1,16 @@
 import {Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn} from "typeorm";
 import {BookEntity} from "../../book/entities/book.entity";
+import {Field, ObjectType} from "@nestjs/graphql";
 
 
+@ObjectType({description:"authors"})
 @Entity({name: 'authors'})
 export class AuthorEntity {
-
+    @Field()
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
+    @Field()
     @Column({
         name: 'first_name',
         type: 'varchar',
@@ -15,6 +18,7 @@ export class AuthorEntity {
     })
     firstName: string;
 
+    @Field()
     @Column({
         name: 'last_name',
         type: 'varchar',
@@ -22,6 +26,7 @@ export class AuthorEntity {
     })
     lastName: string;
 
+    @Field()
     @Column({
         name: 'pseudonym',
         type: 'varchar',
@@ -30,6 +35,7 @@ export class AuthorEntity {
     pseudonym: string;
 
 
+    @Field(()=>[BookEntity],{nullable:true})
     @OneToMany(() => BookEntity, book => book.author)
     public books!: BookEntity[];
 

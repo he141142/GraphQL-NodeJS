@@ -1,7 +1,8 @@
-import {TypeOrmModule} from "@nestjs/typeorm";
+import {DataSource} from "typeorm";
+import {typeOrmConfig} from "./typeorm.config";
 import {POSTGRESQL_CONFIG} from "../../constants/config";
 
-export const typeOrmConfig: TypeOrmModule = {
+export const myDataSource = new DataSource({
     type: 'postgres',
     host: POSTGRESQL_CONFIG.host,
     port: POSTGRESQL_CONFIG.port,
@@ -11,5 +12,4 @@ export const typeOrmConfig: TypeOrmModule = {
     entities: [`${__dirname}/../../**/*.entity.{js,ts}`],
     synchronize: true,
     logging: true,
-};
-
+});
