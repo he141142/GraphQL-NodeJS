@@ -1,3 +1,5 @@
+import { config } from 'dotenv';
+config();
 export const POSTGRESQL_CONFIG = {
     host: process.env.POSTGRESQL_HOST || '',
     username: process.env.POSTGRESQL_USERNAME || '',
