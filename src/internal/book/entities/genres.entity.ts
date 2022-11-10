@@ -29,6 +29,8 @@ export class GenresEntity{
 
     @Field(()=>[BookEntity],{ nullable: true })
     @ManyToMany(()=> BookEntity, (book)=> book.genres)
-    @JoinTable()
+    @JoinTable({
+        name:"book_genres",
+    })
     books: BookEntity[];
 }

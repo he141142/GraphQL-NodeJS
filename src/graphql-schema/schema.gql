@@ -1,0 +1,59 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+"""genres"""
+type GenresEntity {
+  id: String!
+  name: String!
+  orderTimes: Float!
+  books: [BookEntity!]
+}
+
+"""authors"""
+type AuthorEntity {
+  id: String!
+  firstName: String!
+  lastName: String!
+  pseudonym: String!
+  books: [BookEntity!]
+}
+
+type BookEntity {
+  id: UUID!
+  title: String!
+  availableQuantity: Float!
+  totalPage: Float!
+  price: Float!
+  salePrice: Float!
+  genres: [GenresEntity!]
+  author: AuthorEntity
+}
+
+"""A simple UUID parser"""
+scalar UUID
+
+type BookDeleteResponse {
+  location: String!
+  message: String!
+  title: String!
+}
+
+type Query {
+  book(id: UUID!): BookEntity!
+}
+
+type Mutation {
+  loadDefaultGenres: String!
+  createBook(CreateBookDTO: CreateBookDTO!): BookEntity!
+  deleteBookByTitle(title: String!): BookDeleteResponse!
+}
+
+input CreateBookDTO {
+  title: String!
+  availableQuantity: Int!
+  totalPage: Int!
+  price: Float!
+  salePrice: Float!
+  author: String = null
+}

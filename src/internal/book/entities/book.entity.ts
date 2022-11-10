@@ -3,11 +3,12 @@ import {GenresEntity} from "./genres.entity";
 import {AuthorEntity} from "../../author/entities/author.entity";
 import {CreateBookDTO} from "../dto/book.create.dto";
 import {Field, ObjectType} from "@nestjs/graphql";
+import {CustomUuidScalar} from "../../utils/uuid-scalar";
 
 @ObjectType({})
 @Entity({ name: 'books' })
 export class BookEntity{
-    @Field()
+    @Field(()=>CustomUuidScalar)
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
@@ -54,7 +55,9 @@ export class BookEntity{
 
     @Field(() => [GenresEntity], { nullable: true })
     @ManyToMany(() => GenresEntity, (genres) => genres.books)
-    @JoinTable()
+    @JoinTable({
+        name:"book_genres"
+    })
     genres: GenresEntity[];
 
     @Field(() => AuthorEntity, { nullable: true })
